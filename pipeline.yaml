@@ -6,23 +6,20 @@ spec:
   workspaces:
     - name: pipeline-workspace
     - name: dockerconfig-ws
-
   params:
     - name: build-image
     - name: repo-url
     - name: branch
       default: main
     - name: app-name
-
   tasks:
-
     - name: init
       workspaces:
         - name: source
           workspace: pipeline-workspace
       taskRef:
         name: cleanup
-
+    
     - name: clone
       workspaces:
         - name: output
@@ -37,7 +34,6 @@ spec:
           value: $(params.branch)
       runAfter:
         - init
-
     - name: npminstall
       workspaces:
         - name: source
@@ -46,7 +42,6 @@ spec:
         name: npm
       runAfter:
         - clone
-
     - name: tests
       workspaces:
         - name: source
@@ -55,7 +50,6 @@ spec:
         name: jasmine
       runAfter:
         - npminstall
-
     - name: build
       workspaces:
         - name: source
